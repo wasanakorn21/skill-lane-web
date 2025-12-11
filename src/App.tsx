@@ -4,6 +4,7 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import Home from './pages/home/Home';
 import CreateBook from './pages/book/create/CreateBook';
+import BookDetail from './pages/book/detail/BookDetail';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/home" element={<Home/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/create-book" element={<CreateBook />} />
+        <Route path="/book/:id" element={<BookDetail />} />
       </Routes>
     </BrowserRouter>
   );

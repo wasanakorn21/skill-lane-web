@@ -1,0 +1,258 @@
+.book-detail-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow-y: auto;
+}
+
+.book-detail-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.back-button {
+  padding: 0.5rem 1rem;
+  background: #f3f4f6;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.back-button:hover {
+  background: #e5e7eb;
+}
+
+.book-detail-content {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.book-detail-cover-container {
+  flex-shrink: 0;
+}
+
+.book-detail-cover {
+  width: 300px;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.book-detail-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.book-detail-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+}
+
+.book-detail-author {
+  font-size: 1.2rem;
+  color: #667eea;
+  margin: 0 0 2rem 0;
+  font-weight: 600;
+}
+
+.book-info-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1.2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.info-label {
+  font-weight: 700;
+  color: #495057;
+  font-size: 0.95rem;
+  margin-right: 0.3rem;
+}
+
+.info-value {
+  color: #333;
+  font-size: 0.95rem;
+  margin-right: 2rem;
+  font-weight: 500;
+}
+
+.book-detail-description {
+  margin-bottom: 2rem;
+}
+
+.book-detail-description h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.book-detail-description p {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.book-detail-quantity {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.book-detail-quantity p {
+  font-size: 1.3rem;
+  color: #065f46;
+  margin: 0;
+  font-weight: 600;
+}
+
+.book-detail-quantity strong {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #059669;
+}
+
+.book-detail-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.borrow-button {
+  padding: 0.75rem 2rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.borrow-button:hover {
+  background: #059669;
+  transform: translateY(-2px);
+}
+
+.borrow-button:active {
+  transform: translateY(0);
+}
+
+.return-button {
+  padding: 0.75rem 2rem;
+  background: #f59e0b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.return-button:hover {
+  background: #d97706;
+  transform: translateY(-2px);
+}
+
+.return-button:active {
+  transform: translateY(0);
+}
+
+.edit-button {
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.edit-button:hover {
+  transform: translateY(-2px);
+}
+
+.edit-button:active {
+  transform: translateY(0);
+}
+
+.delete-button {
+  padding: 0.75rem 2rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.delete-button:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+}
+
+.delete-button:active {
+  transform: translateY(0);
+}
+
+.loading-message {
+  text-align: center;
+  color: white;
+  font-size: 1.5rem;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .book-detail-content {
+    flex-direction: column;
+  }
+  
+  .book-detail-cover {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .book-detail-title {
+    font-size: 2rem;
+  }
+}
