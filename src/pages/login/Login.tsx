@@ -1,38 +1,39 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import axiosInstance from '../../api/axios';
-import './Login.css';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axiosInstance from "../../api/axios";
+import "./Login.css";
 
 function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post('/auth', {
+      const response = await axiosInstance.post("/auth", {
         username,
         password,
       });
-      
-      // Store token if provided
+
       if (response) {
-        sessionStorage.setItem('accessToken', response.data.accessToken);
-        sessionStorage.setItem('userId', response.data.user.id);
+        sessionStorage.setItem("accessToken", response.data.accessToken);
+        sessionStorage.setItem("userId", response.data.user.id);
       }
-      
-      toast.success('Login successful!');
-      setTimeout(() => navigate('/home'), 1000);
+
+      toast.success("Login successful!");
+      setTimeout(() => navigate("/home"), 1000);
     } catch (error: any) {
-      const errorMessage = error.response?.data?.message || 'Login failed. Please check your credentials.';
+      const errorMessage =
+        error.response?.data?.message ||
+        "Login failed. Please check your credentials.";
       toast.error(errorMessage);
     }
   };
 
   const handleRegister = () => {
-    navigate('/register');
+    navigate("/register");
   };
 
   return (
@@ -65,7 +66,11 @@ function Login() {
           <button type="submit" className="login-button">
             Login
           </button>
-          <button type="button" className="register-button" onClick={handleRegister}>
+          <button
+            type="button"
+            className="register-button"
+            onClick={handleRegister}
+          >
             Register
           </button>
         </form>

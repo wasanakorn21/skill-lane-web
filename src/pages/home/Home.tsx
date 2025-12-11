@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axiosInstance from "../../api/axios";
 import "./Home.css";
+import type { Book } from "../../types/book";
 
 function Home() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
-  const [books, setBooks] = useState<any[]>([]);
+  const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

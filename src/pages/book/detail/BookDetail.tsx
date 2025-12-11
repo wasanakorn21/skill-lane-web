@@ -1,13 +1,14 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import axiosInstance from "../../../api/axios";
+import type { Book } from "../../../types/book";
 import "./BookDetail.css";
 
 function BookDetail() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const [book, setBook] = useState<any>(null);
+  const [book, setBook] = useState<Book>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -56,6 +57,7 @@ function BookDetail() {
   };
 
   const handleReturn = async () => {
+    if (!book?.borrowId) return;
     try {
       await axiosInstance.post(`/book/${book.borrowId}/return`);
       toast.success("คืนหนังสือสำเร็จ");

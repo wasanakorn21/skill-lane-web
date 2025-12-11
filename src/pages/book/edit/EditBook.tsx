@@ -7,14 +7,14 @@ import "./EditBook.css";
 function EditBook() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [isbn, setIsbn] = useState("");
-  const [published, setPublished] = useState("");
-  const [totalQuantity, setTotalQuantity] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [author, setAuthor] = useState<string>("");
+  const [isbn, setIsbn] = useState<string>("");
+  const [published, setPublished] = useState<number>(0);
+  const [totalQuantity, setTotalQuantity] = useState<number>(0);
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -25,7 +25,7 @@ function EditBook() {
         setAuthor(book.author);
         setIsbn(book.isbn);
         setPublished(book.published);
-        setTotalQuantity(book.totalQuantity.toString());
+        setTotalQuantity(book.totalQuantity);
         if (book.coverImage) {
           setImagePreview(book.coverImage);
         }
@@ -44,16 +44,9 @@ function EditBook() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // อัพเดตข้อมูลหนังสือ
-      await axiosInstance.put(`/book/${id}`, {
-        title,
-        author,
-        isbn,
-        published,
-        totalQuantity: parseInt(totalQuantity),
-      });
+      let coverImageFilename = undefined;
 
-      // อัพโหลดรูปภาพใหม่ (ถ้ามี)
+      // อัพโหลดรูปภาพใหม่ก่อน (ถ้ามี)
       if (coverImage) {
         const formData = new FormData();
         formData.append("file", coverImage);
@@ -63,11 +56,23 @@ function EditBook() {
             "Content-Type": "multipart/form-data",
           },
         });
-
-        await axiosInstance.put(`/book/${id}`, {
-          coverImage: image.data.filename,
-        });
+        coverImageFilename = image.data.filename;
       }
+
+      // อัพเดตข้อมูลหนังสือ
+      const updateData: any = {
+        title,
+        author,
+        isbn,
+        published,
+        totalQuantity,
+      };
+
+      if (coverImageFilename) {
+        updateData.coverImage = coverImageFilename;
+      }
+
+      await axiosInstance.patch(`/book/${id}`, updateData);
 
       toast.success("แก้ไขหนังสือสำเร็จ!");
       setTimeout(() => navigate(`/book/${id}`), 1000);
@@ -92,6 +97,8 @@ function EditBook() {
       };
       reader.readAsDataURL(file);
     }
+
+    e.target.value = "";
   };
 
   if (loading) {
@@ -150,7 +157,7 @@ function EditBook() {
                   type="number"
                   id="published"
                   value={published}
-                  onChange={(e) => setPublished(e.target.value)}
+                  onChange={(e) => setPublished(Number(e.target.value))}
                   placeholder="กรอกปีที่พิมพ์"
                   required
                 />
@@ -161,7 +168,7 @@ function EditBook() {
                   type="number"
                   id="totalQuantity"
                   value={totalQuantity}
-                  onChange={(e) => setTotalQuantity(e.target.value)}
+                  onChange={(e) => setTotalQuantity(Number(e.target.value))}
                   placeholder="กรอกจำนวนเล่ม"
                   min="1"
                   max="99"
