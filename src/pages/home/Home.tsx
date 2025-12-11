@@ -117,7 +117,6 @@ function Home() {
                   <div className="book-info">
                     <h3 className="book-title">{book.title}</h3>
                     <p className="book-author">โดย: {book.author}</p>
-                    <p className="book-description">{book.description}</p>
                     <div className="book-footer">
                       <p className="book-quantity">
                         จำนวนในระบบ: {book.availableQuantity || 0} เล่ม
@@ -132,7 +131,7 @@ function Home() {
                       )}
                       {book.isBorrowed && (
                         <button
-                          onClick={(e) => handleReturn(e, book.borrowId)}
+                          onClick={(e) => handleReturn(e, book.borrowId!)}
                           className="card-return-button"
                         >
                           คืน

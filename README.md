@@ -1,73 +1,178 @@
-# React + TypeScript + Vite
+# Skill Lane Library Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ระบบจัดการห้องสมุด (Library Management System) สำหรับการยืม-คืนหนังสือ พัฒนาด้วย React, TypeScript และ Vite
 
-Currently, two official plugins are available:
+## 🚀 เทคโนโลจีที่ใช้
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19.2.0** - JavaScript Library สำหรับสร้าง UI
+- **TypeScript 5.9.3** - JavaScript with Type Safety
+- **Vite 7.2.4** - Build Tool และ Development Server
+- **React Router DOM 7.10.1** - Client-side Routing
+- **Axios 1.13.2** - HTTP Client สำหรับเรียก API
+- **React Hot Toast 2.6.0** - Toast Notifications
 
-## React Compiler
+## 📋 ความสามารถของระบบ
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Authentication
 
-## Expanding the ESLint configuration
+- 🔐 ระบบ Login/Register
+- 🔑 JWT Token Authentication
+- 👤 User Session Management
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Book Management
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- 📚 ดูรายการหนังสือทั้งหมด
+- 🔍 ค้นหาหนังสือ
+- ➕ เพิ่มหนังสือใหม่ (ชื่อ, ผู้แต่ง, ISBN, ปีที่พิมพ์, จำนวนเล่ม, รูปปกหนังสือ)
+- ✏️ แก้ไขข้อมูลหนังสือ
+- 📖 ดูรายละเอียดหนังสือ
+- 📸 Upload รูปปกหนังสือ
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Borrow & Return System
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- 📤 ยืมหนังสือ (แสดงปุ่มเมื่อ availableQuantity > 0 และ isBorrowed = false)
+- 📥 คืนหนังสือ (แสดงปุ่มเมื่อ isBorrowed = true)
+- 📊 แสดงจำนวนหนังสือคงเหลือแบบ real-time
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📦 การติดตั้ง
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### ข้อกำหนดเบื้องต้น
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Node.js (เวอร์ชัน 16 ขึ้นไป)
+- npm หรือ yarn
+- Backend API Server (รันที่ port 3100)
+
+### ขั้นตอนการติดตั้ง
+
+1. Clone repository
+   \`\`\`bash
+   git clone <repository-url>
+   cd skill-lane-web
+   \`\`\`
+
+2. ติดตั้ง dependencies
+   \`\`\`bash
+   npm install
+   \`\`\`
+
+3. ตั้งค่า Environment Variables
+   \`\`\`bash
+   cp .env.example .env
+   \`\`\`
+
+4. รัน Development Server
+   \`\`\`bash
+   npm run dev
+   \`\`\`
+
+เว็บจะเปิดที่ \`http://localhost:3100\`
+
+## 🛠️ คำสั่งที่ใช้งาน
+
+\`\`\`bash
+
+# รัน Development Server
+
+npm run dev
+
+# Build สำหรับ Production
+
+npm run build
+
+# Preview Production Build
+
+npm run preview
+
+# Lint Code
+
+npm run lint
+\`\`\`
+
+## 📁 โครงสร้างโปรเจค
+
+\`\`\`
+src/
+├── api/
+│ └── axios.ts # Axios instance และ interceptors
+├── assets/ # Static assets
+├── pages/
+│ ├── login/ # หน้า Login
+│ ├── register/ # หน้า Register
+│ ├── home/ # หน้ารายการหนังสือ
+│ └── book/
+│ ├── create/ # หน้าสร้างหนังสือ
+│ ├── edit/ # หน้าแก้ไขหนังสือ
+│ └── detail/ # หน้ารายละเอียดหนังสือ
+├── types/
+│ └── book.ts # TypeScript Types/Interfaces
+├── App.tsx # Main App Component
+├── main.tsx # Entry Point
+└── index.css # Global Styles
+\`\`\`
+
+## 🔌 API Endpoints
+
+ระบบเชื่อมต่อกับ Backend API ผ่าน endpoints ต่อไปนี้:
+
+### Authentication
+
+- \`POST /login\` - เข้าสู่ระบบ
+- \`POST /register\` - สมัครสมาชิก
+
+### Books
+
+- \`GET /book\` - ดึงรายการหนังสือทั้งหมด (รองรับ query parameter \`?search=\`)
+- \`GET /book/:id\` - ดึงรายละเอียดหนังสือ
+- \`POST /book\` - สร้างหนังสือใหม่
+- \`PATCH /book/:id\` - แก้ไขข้อมูลหนังสือ
+- \`POST /book/upload\` - อัพโหลดรูปปกหนังสือ
+
+### Borrow & Return
+
+- \`POST /book/borrow\` - ยืมหนังสือ
+- \`POST /book/:borrowId/return\` - คืนหนังสือ
+
+## 🎨 Features พิเศษ
+
+- ✨ UI/UX สวยงามด้วย Gradient Design
+- 📱 Responsive Design
+- 🎯 Type Safety ด้วย TypeScript
+- 🔄 Real-time State Management
+- 🖼️ Image Preview ก่อน Upload
+- 🎨 Modern CSS Layout (Flexbox, Grid)
+- 🔔 Toast Notifications สำหรับ User Feedback
+- 🔐 Protected Routes ด้วย JWT
+
+## 📝 การใช้งานระบบ
+
+1. **เข้าสู่ระบบ** - ใช้ username และ password
+2. **ดูรายการหนังสือ** - หน้า Home จะแสดงหนังสือทั้งหมดในระบบ
+3. **ค้นหาหนังสือ** - ใช้ช่องค้นหาด้านบน
+4. **เพิ่มหนังสือ** - กดปุ่ม "สร้างหนังสือใหม่"
+5. **ยืมหนังสือ** - กดปุ่ม "ยืม" บน Card หนังสือ (ถ้ามีหนังสือว่าง)
+6. **คืนหนังสือ** - กดปุ่ม "คืน" บน Card หนังสือ (ถ้ายืมอยู่)
+7. **แก้ไขหนังสือ** - เข้าหน้ารายละเอียดแล้วกดปุ่ม "แก้ไข"
+
+## 🔧 การตั้งค่า Backend API
+
+โปรเจคนี้ต้องการ Backend API ที่รันอยู่ที่ \`http://localhost:3100\`
+
+ตัวอย่างการตั้งค่า:
+\`\`\`typescript
+// src/api/axios.ts
+const axiosInstance = axios.create({
+baseURL: process.env.VITE_API_URL || 'http://localhost:3100',
+headers: {
+'Content-Type': 'application/json',
+},
+});
+\`\`\`
+
+## 🤝 Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## 📄 License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+EOF
