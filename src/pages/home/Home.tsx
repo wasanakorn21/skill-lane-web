@@ -17,7 +17,9 @@ function Home() {
   const fetchBooks = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get("/book");
+      const response = await axiosInstance.get("/book", {
+        params: { search },
+      });
       setBooks(response.data);
     } catch (error: any) {
       const errorMessage =
@@ -32,12 +34,6 @@ function Home() {
     sessionStorage.removeItem("accessToken");
     sessionStorage.removeItem("userId");
     navigate("/login");
-  };
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Searching for:", search);
-    // TODO: Implement search functionality
   };
 
   const handleCreateBook = () => {
@@ -84,7 +80,7 @@ function Home() {
       </header>
       <main className="home-content">
         <div className="search-section">
-          <form onSubmit={handleSearch} className="search-form">
+          <div className="search-form">
             <input
               type="text"
               className="search-input"
@@ -92,10 +88,7 @@ function Home() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <button type="submit" className="search-button">
-              ค้นหา
-            </button>
-          </form>
+          </div>
           <button onClick={handleCreateBook} className="create-book-button">
             + สร้างหนังสือ
           </button>
