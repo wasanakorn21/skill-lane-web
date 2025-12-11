@@ -75,32 +75,13 @@
   border-radius: 5px;
   font-size: 1rem;
   transition: border-color 0.3s;
+  background-color: white;
+  color: black;
 }
 
 .search-input:focus {
   outline: none;
   border-color: #667eea;
-}
-
-.search-button {
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s;
-  white-space: nowrap;
-}
-
-.search-button:hover {
-  transform: translateY(-2px);
-}
-
-.search-button:active {
-  transform: translateY(0);
 }
 
 .create-book-button {

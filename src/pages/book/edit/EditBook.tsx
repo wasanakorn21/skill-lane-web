@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import axiosInstance from "../../../api/axios";
-import "./CreateBook.css";
+import "./EditBook.css";
 
-function CreateBook() {
+function EditBook() {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [isbn, setIsbn] = useState("");
@@ -13,37 +14,72 @@ function CreateBook() {
   const [totalQuantity, setTotalQuantity] = useState("");
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const response = await axiosInstance.get(`/book/${id}`);
+        const book = response.data;
+        setTitle(book.title);
+        setAuthor(book.author);
+        setIsbn(book.isbn);
+        setPublished(book.published);
+        setTotalQuantity(book.totalQuantity.toString());
+        if (book.coverImage) {
+          setImagePreview(book.coverImage);
+        }
+        setLoading(false);
+      } catch (error: any) {
+        const errorMessage =
+          error.response?.data?.message || "ไม่สามารถโหลดข้อมูลหนังสือได้";
+        toast.error(errorMessage);
+        setTimeout(() => navigate("/home"), 1000);
+      }
+    };
+
+    fetchBook();
+  }, [id, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append("file", coverImage!);
-
-      const image = await axiosInstance.post("/book/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      await axiosInstance.post("/book", {
+      // อัพเดตข้อมูลหนังสือ
+      await axiosInstance.put(`/book/${id}`, {
         title,
         author,
         isbn,
         published,
         totalQuantity: parseInt(totalQuantity),
-        coverImage: image.data.filename,
       });
-      toast.success("สร้างหนังสือสำเร็จ!");
-      setTimeout(() => navigate("/home"), 1000);
+
+      // อัพโหลดรูปภาพใหม่ (ถ้ามี)
+      if (coverImage) {
+        const formData = new FormData();
+        formData.append("file", coverImage);
+
+        const image = await axiosInstance.post("/book/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        await axiosInstance.put(`/book/${id}`, {
+          coverImage: image.data.filename,
+        });
+      }
+
+      toast.success("แก้ไขหนังสือสำเร็จ!");
+      setTimeout(() => navigate(`/book/${id}`), 1000);
     } catch (error: any) {
       const errorMessage =
-        error.response?.data?.message || "ไม่สามารถสร้างหนังสือได้";
+        error.response?.data?.message || "ไม่สามารถแก้ไขหนังสือได้";
       toast.error(errorMessage);
     }
   };
 
   const handleCancel = () => {
-    navigate("/home");
+    navigate(`/book/${id}`);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,10 +94,20 @@ function CreateBook() {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="edit-book-container">
+        <div className="edit-book-card">
+          <p>กำลังโหลดข้อมูล...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="create-book-container">
-      <div className="create-book-card">
-        <h1>สร้างหนังสือใหม่</h1>
+    <div className="edit-book-container">
+      <div className="edit-book-card">
+        <h1>แก้ไขหนังสือ</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-content">
             <div className="form-left">
@@ -145,7 +191,7 @@ function CreateBook() {
           </div>
           <div className="button-group">
             <button type="submit" className="submit-button">
-              สร้างหนังสือ
+              บันทึกการแก้ไข
             </button>
             <button
               type="button"
@@ -161,4 +207,4 @@ function CreateBook() {
   );
 }
 
-export default CreateBook;
+export default EditBook;
