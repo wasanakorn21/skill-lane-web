@@ -106,6 +106,7 @@ function CreateBook() {
                   value={published}
                   onChange={(e) => setPublished(e.target.value)}
                   placeholder="กรอกปีที่พิมพ์"
+                  min="1"
                   required
                 />
               </div>

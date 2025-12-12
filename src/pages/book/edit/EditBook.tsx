@@ -159,6 +159,7 @@ function EditBook() {
                   value={published}
                   onChange={(e) => setPublished(Number(e.target.value))}
                   placeholder="กรอกปีที่พิมพ์"
+                  min="1"
                   required
                 />
               </div>
